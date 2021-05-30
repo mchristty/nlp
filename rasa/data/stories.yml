@@ -1,0 +1,67 @@
+version: "2.0"
+stories:
+- story: hello and know name
+  steps:
+  - intent: greet
+  - action: name_form
+  - active_loop: name_form
+  - active_loop: null
+  - action: utter_hello
+  - action: utter_can_help
+- story: help
+  steps:
+  - intent: ask_for_help
+  - action: utter_can_help
+- story: member wants something about sport
+  steps:
+  - intent: sports
+  - action: utter_sports
+  - action: get_sport_info
+- story: member wants something about animals
+  steps:
+  - intent: animals
+  - slot_was_set:
+    - animal_pic_type: 'cat'
+  - action: utter_ask_animals
+- story: sad
+  steps:
+  - intent: sad
+  - slot_was_set:
+    - animals_type: 'cat'
+  - action: action_animal_pic
+  - action: utter_ask_are_you_happy
+  - action: utter_anything_else
+- story: member wants something about animals
+  steps:
+  - intent: animals_by_type
+  - action: get_fact_about_animal
+- story: member wants facts
+  steps:
+  - intent: get_fact
+  - action: get_fact_about_animal
+  - action: utter_anything_else
+- story: member wants country
+  steps:
+  - intent: country_by_city
+  # - action: utter_ask_city
+  - action: city_form
+  - active_loop: city_form
+  - active_loop: null
+  - action: action_country_by_city
+  - action: utter_anything_else
+- story: animal pic
+  steps:
+  - intent: animal_pic
+  - action: action_animal_pic
+  - action: utter_anything_else
+- story: anything else affirm
+  steps:
+  - action: utter_anything_else
+  - intent: affirm
+  - action: utter_greet
+- story: anything else deny
+  steps:
+  - action: utter_anything_else
+  - intent: deny
+  - action: utter_goodbye
+
