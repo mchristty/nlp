@@ -1,0 +1,129 @@
+version: '2.0'
+config:
+  store_entities_as_slots: true
+session_config:
+  session_expiration_time: 60
+  carry_over_slots_to_new_session: true
+intents:
+- ask_for_help:
+    use_entities: true
+- greet:
+    use_entities: true
+- goodbye:
+    use_entities: true
+- affirm:
+    use_entities: true
+- deny:
+    use_entities: true
+- bot_challenge:
+    use_entities: true
+- sports:
+    use_entities: true
+- get_fact:
+    use_entities: true
+- country_by_city:
+    use_entities: true
+- animals:
+    use_entities: true
+- animal_pic:
+    use_entities: true
+- cancel_action:
+    use_entities: true
+- stop:
+    use_entities: true
+- sad:
+    use_entities: true
+- animals_by_type:
+    use_entities: true
+entities:
+- animals_type
+- city
+- animal_pic_type
+- name
+slots:
+  city:
+    type: rasa.shared.core.slots.AnySlot
+    initial_value: null
+    auto_fill: true
+    influence_conversation: false
+  name:
+    type: rasa.shared.core.slots.AnySlot
+    initial_value: null
+    auto_fill: true
+    influence_conversation: false
+  animal_pic_type:
+    type: rasa.shared.core.slots.AnySlot
+    initial_value: null
+    auto_fill: true
+    influence_conversation: false
+  animals_type:
+    type: rasa.shared.core.slots.AnySlot
+    initial_value: null
+    auto_fill: true
+    influence_conversation: false
+responses:
+  utter_sports:
+  - text: I will tell you something about football
+  utter_ask_city:
+  - text: What city do you interested in?
+  utter_hello:
+  - text: Hi, {name}
+  utter_ask_name:
+  - text: What is your name?
+  utter_ask_animals:
+  - buttons:
+    - payload: /get_fact{{"animals_type":"cat"}}
+      title: Cat
+    - payload: /get_fact{{"animals_type":"dog"}}
+      title: Dog
+    text: Choose animal
+  utter_anything_else:
+  - text: Is there anything else I can help you with?
+  utter_greet:
+  - buttons:
+    - payload: /sports
+      title: Info about games
+    - payload: /animals
+      title: Facts about animals
+    - payload: /country_by_city
+      title: Сountry by city
+    text: Howdy! What can I help you with today?
+  utter_animals:
+  - text: Choose animal!
+  utter_happy:
+  - text: Great, carry on!
+  utter_ask_are_you_happy:
+  - text: I hope you became a little happier, or just smiled!
+  utter_goodbye:
+  - text: Okay. I'll be here to help you with all of your future insurance needs. Have a stupendous day!
+  utter_iamabot:
+  - text: I am a bot, powered by Rasa.
+  utter_out_of_scope:
+  - text: I don't understand what you're asking.
+  utter_please_rephrase:
+  - text: I didn't quite understand that. Could you please rephrase?
+  utter_chitchat:
+  - text: This is a piece of chitchat.
+  utter_default:
+  - text: Sorry I didn't get that. Can you rephrase?
+  utter_can_help:
+  - text: Can i help you {name}?
+actions:
+- action_country_by_city
+- action_animal_pic
+- get_fact_about_animal
+- get_sport_info
+forms:
+  city_form:
+    city:
+    - entity: city
+      type: from_entity
+    - not_intent: stop
+      type: from_text
+  name_form:
+    name:
+    - entity: name
+      type: from_entity
+    - not_intent: stop
+      type: from_text
+e2e_actions: []
